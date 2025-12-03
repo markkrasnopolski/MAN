@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="36" viewBox="0 0 160 36" fill="none">
+  <rect rx="8" width="160" height="36" fill="#F6FBF9"/>
+  <g transform="translate(10,6)">
+    <circle cx="12" cy="12" r="10" fill="#8FD3C7"/>
+    <path d="M7 12c0-2.8 2.2-5 5-5 2.8 0 5 2.2 5 5s-2.2 5-5 5c-2.8 0-5-2.2-5-5z" fill="#FFFFFF"/>
+    <text x="34" y="17" font-family="Arial, sans-serif" font-size="12" fill="#3a6b60">AllergyCare</text>
+  </g>
+</svg>
