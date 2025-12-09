@@ -1,0 +1,2743 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AllergyCare - Каталог препаратів</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --mint-light: #E8F6F3;
+            --mint-medium: #D0ECE7;
+            --mint-dark: #A2D9CE;
+            --green-light: #76D7C4;
+            --green-medium: #48C9B0;
+            --green-dark: #1ABC9C;
+            --teal: #16A085;
+            --dark-teal: #117A65;
+            --text-dark: #1C2833;
+            --text-medium: #566573;
+            --text-light: #7F8C8D;
+            --white: #FFFFFF;
+            --gray-light: #F8F9F9;
+            --danger: #E74C3C;
+            --warning: #F39C12;
+            --info: #3498DB;
+            --gradient: linear-gradient(135deg, #48C9B0 0%, #1ABC9C 25%, #16A085 50%, #117A65 100%);
+        }
+
+        body {
+            background: linear-gradient(135deg, #E8F6F3 0%, #D0ECE7 50%, #A2D9CE 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(72, 201, 176, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(26, 188, 156, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Навігація */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(26, 188, 156, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            text-decoration: none;
+            color: var(--teal);
+            font-weight: 800;
+            font-size: 1.7rem;
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 188, 156, 0.25);
+            background: white;
+        }
+
+        .logo img {
+            height: 48px;
+            width: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.05rem;
+            padding: 12px 24px;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            transition: left 0.4s;
+            z-index: -1;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 188, 156, 0.3);
+        }
+
+        .nav-links a:hover::before {
+            left: 0;
+        }
+
+        .nav-links a.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 6px 20px rgba(26, 188, 156, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Заголовок сторінки */
+        .catalog-header {
+            text-align: center;
+            margin: 50px 0 40px;
+            padding: 50px 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .catalog-header h1 {
+            font-size: 2.8rem;
+            color: var(--dark-teal);
+            margin-bottom: 15px;
+        }
+
+        .catalog-header p {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Пошук і фільтри */
+        .search-filters {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 992px) {
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .filter-section, .search-section {
+            background: rgba(248, 249, 249, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--dark-teal);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .allergen-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--mint-medium);
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            background: var(--white);
+            position: relative;
+        }
+
+        .allergen-input:focus {
+            outline: none;
+            border-color: var(--green-medium);
+            box-shadow: 0 0 0 3px rgba(72, 201, 176, 0.2);
+        }
+
+        .allergen-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+
+        .allergen-tag {
+            background: var(--danger);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .allergen-tag i {
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: transform 0.2s;
+        }
+
+        .allergen-tag i:hover {
+            transform: scale(1.2);
+        }
+
+        /* Пошук препаратів - новий стиль */
+        .search-section {
+            position: relative;
+        }
+
+        .search-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--mint-medium);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--green-medium);
+            box-shadow: 0 0 0 3px rgba(72, 201, 176, 0.2);
+        }
+
+        /* Кнопки пошуку - опущені нижче */
+        .search-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 48px;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 188, 156, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--mint-dark) 0%, var(--green-light) 100%);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(162, 217, 206, 0.4);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--white);
+        }
+
+        .btn-success {
+            background: #27AE60;
+            color: var(--white);
+        }
+
+        .quick-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .quick-filter {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--mint-medium);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .quick-filter:hover {
+            background: var(--mint-light);
+            border-color: var(--green-light);
+        }
+
+        .quick-filter.active {
+            background: var(--green-medium);
+            color: var(--white);
+            border-color: var(--green-medium);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .category-filter {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--mint-medium);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .category-filter:hover {
+            border-color: var(--green-medium);
+            background: var(--mint-light);
+        }
+
+        .category-filter.active {
+            background: var(--green-medium);
+            color: var(--white);
+            border-color: var(--green-medium);
+        }
+
+        /* Статистика */
+        .stats {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: rgba(248, 249, 249, 0.8);
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: transparent;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Сітка товарів */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(26, 188, 156, 0.1);
+            background: linear-gradient(135deg, var(--mint-light) 0%, var(--mint-medium) 100%);
+        }
+
+        .product-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-teal);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .product-category {
+            color: var(--green-medium);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-description {
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .product-composition {
+            background: rgba(232, 246, 243, 0.8);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--green-medium);
+        }
+
+        .composition-title {
+            font-weight: 600;
+            color: var(--teal);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .composition-text {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .product-allergens {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .allergen-badge {
+            background: rgba(255, 234, 167, 0.8);
+            color: #D35400;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(211, 84, 0, 0.1);
+        }
+
+        .allergen-badge.danger {
+            background: rgba(253, 237, 236, 0.9);
+            color: #E74C3C;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(26, 188, 156, 0.1);
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            min-height: 44px;
+        }
+
+        .action-btn.details {
+            background: rgba(232, 246, 243, 0.8);
+            color: var(--teal);
+        }
+
+        .action-btn.details:hover {
+            background: var(--mint-medium);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.exclude {
+            background: rgba(253, 237, 236, 0.8);
+            color: var(--danger);
+        }
+
+        .action-btn.exclude:hover {
+            background: #FADBD8;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.delete {
+            background: rgba(253, 237, 236, 0.8);
+            color: var(--danger);
+        }
+
+        .action-btn.delete:hover {
+            background: #FADBD8;
+            transform: translateY(-2px);
+        }
+
+        /* Повідомлення про відсутність товарів */
+        .no-products {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .no-products i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--mint-dark);
+        }
+
+        .no-products h2 {
+            font-size: 1.8rem;
+            color: var(--dark-teal);
+            margin-bottom: 15px;
+        }
+
+        .no-products p {
+            color: var(--text-medium);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Автодоповнення */
+        .autocomplete {
+            position: relative;
+            width: 100%;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 2px solid var(--mint-medium);
+            border-top: none;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-radius: 0 0 12px 12px;
+            max-height: 250px;
+            overflow-y: auto;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .autocomplete-items div {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--mint-light);
+            transition: background 0.2s;
+        }
+
+        .autocomplete-items div:hover {
+            background-color: var(--mint-light);
+        }
+
+        /* Форма додавання товару */
+        .add-product-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .add-product-form.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--dark-teal);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 14px;
+            border: 2px solid var(--mint-medium);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--green-medium);
+            box-shadow: 0 0 0 3px rgba(72, 201, 176, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(232, 246, 243, 0.8);
+            border-radius: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 150px;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--green-medium);
+        }
+
+        /* Рекомендовані товари */
+        .recommendations-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .recommendations-title {
+            font-size: 1.5rem;
+            color: var(--dark-teal);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .recommendation-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--green-medium);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .recommendation-name {
+            font-size: 1.2rem;
+            color: var(--dark-teal);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .recommendation-category {
+            color: var(--green-medium);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .recommendation-composition {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-allergens {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        /* Автодоповнення для алергенів */
+        .allergen-autocomplete {
+            position: relative;
+        }
+
+        .allergen-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border: 2px solid var(--mint-medium);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .allergen-suggestion {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--mint-light);
+            transition: background 0.2s;
+        }
+
+        .allergen-suggestion:hover {
+            background-color: var(--mint-light);
+        }
+
+        /* Модальні вікна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            animation: slideIn 0.3s;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--text-light);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+        }
+
+        /* Футер */
+        footer {
+            background: linear-gradient(135deg, var(--dark-teal) 0%, var(--teal) 100%);
+            color: var(--white);
+            padding: 60px 0 25px;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--green-light);
+            border-radius: 3px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            gap: 15px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Анімації */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивність */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .search-filters {
+                padding: 20px;
+            }
+
+            .filter-section, .search-section {
+                padding: 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .catalog-header h1 {
+                font-size: 2rem;
+            }
+
+            .catalog-header p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+            }
+
+            .nav-links a {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .logo img {
+                height: 36px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навігація -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.svg" alt="AllergyCare логотип">
+                AllergyCare
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Головна</a>
+                <a href="catalog.html" class="active">Каталог</a>
+                <a href="help.html">Допомога</a>
+                <a href="contacts.html">Контакти</a>
+                <a href="policy.html">Політика</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Заголовок -->
+        <div class="catalog-header">
+            <h1><i class="fas fa-prescription-bottle-alt"></i> Каталог медичних засобів</h1>
+            <p>Фільтруй за алергенами, шукай за назвою, категорією або інгредієнтом</p>
+        </div>
+
+        <!-- Пошук і фільтри -->
+        <div class="search-filters">
+            <div class="filter-section">
+                <h3 class="section-title"><i class="fas fa-filter"></i> Фільтрація за алергенами</h3>
+                <div class="allergen-autocomplete">
+                    <input type="text" id="allergenInput" class="allergen-input" placeholder="Введіть алерген (парацетамол, ампіцилін, сорбінова кислота...)">
+                    <div id="allergenSuggestions" class="allergen-suggestions"></div>
+                </div>
+                <div class="allergen-tags" id="allergenTags"></div>
+                <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 20px;">
+                    <i class="fas fa-info-circle"></i> Товари з цими інгредієнтами будуть виключені
+                </p>
+                <div class="buttons">
+                    <button class="btn btn-primary" id="filterBtn">
+                        <i class="fas fa-filter"></i> Застосувати фільтри
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <i class="fas fa-redo"></i> Скинути все
+                    </button>
+                    <button class="btn btn-warning" id="addProductBtn">
+                        <i class="fas fa-plus"></i> Додати препарат
+                    </button>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 25px;"><i class="fas fa-bolt"></i> Швидкі фільтри</h3>
+                <div class="quick-filters">
+                    <button class="quick-filter" data-allergen="парацетамол">Без парацетамолу</button>
+                    <button class="quick-filter" data-allergen="ампіцилін">Без ампіциліну</button>
+                    <button class="quick-filter" data-allergen="сорбінова кислота">Без консервантів</button>
+                    <button class="quick-filter" data-allergen="лактоза">Без лактози</button>
+                    <button class="quick-filter" data-allergen="барвники">Без барвників</button>
+                </div>
+            </div>
+
+            <div class="search-section">
+                <h3 class="section-title"><i class="fas fa-search"></i> Пошук препаратів</h3>
+                <div class="search-wrapper">
+                    <div class="autocomplete">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Шукайте за назвою, категорією або інгредієнтом...">
+                        <div id="autocompleteList" class="autocomplete-items"></div>
+                    </div>
+
+                    <!-- Кнопки опущені нижче -->
+                    <div class="search-buttons">
+                        <button class="btn btn-primary" id="searchBtn">
+                            <i class="fas fa-search"></i> Пошук
+                        </button>
+                        <button class="btn btn-secondary" id="clearSearchBtn">
+                            <i class="fas fa-times"></i> Очистити
+                        </button>
+                    </div>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 25px;"><i class="fas fa-list"></i> Категорії</h3>
+                <div class="category-filters">
+                    <button class="category-filter active" data-category="all">Всі</button>
+                    <button class="category-filter" data-category="antibiotics">Антибіотики</button>
+                    <button class="category-filter" data-category="analgesics">Знеболюючі</button>
+                    <button class="category-filter" data-category="ointments">Мазі/Креми</button>
+                    <button class="category-filter" data-category="antihistamines">Антигістамінні</button>
+                    <button class="category-filter" data-category="sprays">Спреї</button>
+                    <button class="category-filter" data-category="syrups">Сиропи</button>
+                    <button class="category-filter" data-category="drops">Краплі</button>
+                    <button class="category-filter" data-category="vitamins">Вітаміни</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма додавання товару -->
+        <div class="add-product-form" id="addProductForm">
+            <h3 class="section-title"><i class="fas fa-plus-circle"></i> Додати новий препарат</h3>
+            <form id="newProductForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="productName">Назва препарату *</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Категорія *</label>
+                        <select id="productCategory" required>
+                            <option value="">Виберіть категорію</option>
+                            <option value="antibiotics">Антибіотики</option>
+                            <option value="analgesics">Знеболюючі</option>
+                            <option value="ointments">Мазі та креми</option>
+                            <option value="antihistamines">Антигістамінні</option>
+                            <option value="sprays">Спреї</option>
+                            <option value="syrups">Сиропи</option>
+                            <option value="drops">Краплі</option>
+                            <option value="vitamins">Вітаміни</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Опис та показання</label>
+                        <textarea id="productDescription" placeholder="Опишіть препарат, показання до застосування..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="productComposition">Склад *</label>
+                        <textarea id="productComposition" required placeholder="Основні інгредієнти, розділені комою (наприклад: парацетамол, крохмаль, целюлоза...)"></textarea>
+                    </div>
+                </div>
+
+                <!-- Секція завантаження фото -->
+                <div class="photo-upload-section" style="background: rgba(232, 246, 243, 0.8); padding: 20px; border-radius: 15px; margin-top: 10px; border: 2px solid var(--mint-medium);">
+                    <h4><i class="fas fa-camera"></i> Фото препарату</h4>
+                    <div class="form-group">
+                        <label for="productPhoto">URL зображення *</label>
+                        <input type="text" id="productPhoto" required placeholder="https://example.com/photo.jpg">
+                        <small style="color: var(--text-light); margin-top: 5px;">Введіть пряме посилання на зображення препарату</small>
+                    </div>
+
+                    <div class="photo-preview" id="photoPreview">
+                        <div class="photo-preview-placeholder" style="width: 200px; height: 150px; background: rgba(162, 217, 206, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-light); margin: 0 auto; flex-direction: column;">
+                            <i class="fas fa-image" style="font-size: 2rem;"></i>
+                            <div style="margin-top: 10px; font-size: 0.9rem;">Попередній перегляд</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Алергени (оберіть ті, що містяться в препараті):</label>
+                    <div class="checkbox-group" id="allergenCheckboxes"></div>
+                </div>
+
+                <div class="buttons">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Зберегти препарат
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="cancelAddBtn">
+                        <i class="fas fa-times"></i> Скасувати
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="totalProducts">0</div>
+                <div class="stat-label">Всього препаратів</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="shownProducts">0</div>
+                <div class="stat-label">Показано</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="excludedAllergens">0</div>
+                <div class="stat-label">Виключено алергенів</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="searchResults">0</div>
+                <div class="stat-label" id="searchTerm">Пошук: всі препарати</div>
+            </div>
+        </div>
+
+        <!-- Сітка товарів -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Товари будуть завантажуватися тут -->
+        </div>
+
+        <!-- Рекомендовані товари -->
+        <div id="recommendationsSection" class="recommendations-section hidden">
+            <h3 class="recommendations-title">
+                <i class="fas fa-lightbulb"></i> Рекомендовані препарати
+            </h3>
+            <p style="color: var(--text-medium); margin-bottom: 20px;">
+                Знайдений вами препарат містить алергени. Ось схожі препарати без ваших алергенів:
+            </p>
+            <div class="recommendations-grid" id="recommendationsGrid">
+                <!-- Рекомендації будуть тут -->
+            </div>
+        </div>
+
+        <!-- Повідомлення про відсутність товарів -->
+        <div id="noProductsMessage" class="no-products hidden">
+            <i class="fas fa-search"></i>
+            <h2>Препарати не знайдено</h2>
+            <p>Спробуйте змінити критерії пошуку або видалити деякі алергени</p>
+            <button class="btn btn-primary" id="resetFiltersBtn" style="margin-top: 20px;">
+                <i class="fas fa-redo"></i> Скинути всі фільтри
+            </button>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AllergyCare</h3>
+                    <p>Ваш надійний помічник у виборі безпечних медичних засобів.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Навігація</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Головна</a></li>
+                        <li><a href="catalog.html">Каталог</a></li>
+                        <li><a href="help.html">Допомога</a></li>
+                        <li><a href="contacts.html">Контакти</a></li>
+                        <li><a href="policy.html">Політика безпеки</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Контакти</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> polpok172@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 234-5678</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Völklinger Str. 38, 40221 Düsseldorf</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Інформація</h3>
+                    <p>Цей каталог призначений для інформаційних цілей. Звертайтеся до лікаря перед застосуванням.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© AllergyCare. Всі права захищені. Інформація надається з ознайомчою метою.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальне вікно для деталей товару -->
+    <div id="productDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('productDetailsModal')">&times;</span>
+            <div id="productDetailsContent">
+                <!-- Деталі товару будуть вставлятися тут -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальне вікно для успішного додавання -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('successModal')">&times;</span>
+            <div style="text-align: center; padding: 30px;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: #27AE60; margin-bottom: 20px;"></i>
+                <h3 style="color: var(--dark-teal); margin-bottom: 15px;">Препарат успішно додано!</h3>
+                <p style="color: var(--text-medium); margin-bottom: 25px;">Новий препарат тепер доступний у каталозі.</p>
+                <button class="btn btn-success" onclick="closeModal('successModal')">
+                    <i class="fas fa-check"></i> Зрозуміло
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =================== БАЗА ДАНИХ ===================
+        let products = [];
+        const allAllergens = [
+            "амоксицилін", "пеницилін", "лактоза", "азитроміцин", "цефалоспорини",
+            "лідокаїн", "тетрацикліни", "желатин", "барвники", "макроліди",
+            "сульфіти", "нітроімідазоли", "півп", "азоли", "парацетамол",
+            "пропіонова кислота", "крохмаль", "диклофенак", "тальк", "кеторолак",
+            "бензалконій", "саліцилати", "ланолін", "парафін", "етанол",
+            "цетиризин", "лоратадин", "сорбітол", "парабени", "ментол",
+            "ампіцилін", "сорбінова кислота", "консерванти", "барвник", "ароматизатор",
+            "гліцерин", "пропіленгліколь", "сахароза", "етиловий спирт", "воск"
+        ];
+
+        const categories = {
+            "antibiotics": "Антибіотики",
+            "analgesics": "Знеболюючі",
+            "ointments": "Мазі та креми",
+            "antihistamines": "Антигістамінні",
+            "sprays": "Спреї",
+            "syrups": "Сиропи",
+            "drops": "Краплі",
+            "vitamins": "Вітаміни"
+        };
+
+        // =================== ЗМІННІ СТАНУ ===================
+        let activeAllergens = [];
+        let currentSearch = "";
+        let currentCategory = "all";
+        let filteredProducts = [];
+        let lastSearchedProduct = null;
+        let isRecommendationMode = false;
+
+        // =================== DOM ЕЛЕМЕНТИ ===================
+        const allergenInput = document.getElementById('allergenInput');
+        const allergenTags = document.getElementById('allergenTags');
+        const allergenSuggestions = document.getElementById('allergenSuggestions');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const filterBtn = document.getElementById('filterBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const addProductBtn = document.getElementById('addProductBtn');
+        const addProductForm = document.getElementById('addProductForm');
+        const cancelAddBtn = document.getElementById('cancelAddBtn');
+        const newProductForm = document.getElementById('newProductForm');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const productsGrid = document.getElementById('productsGrid');
+        const noProductsMessage = document.getElementById('noProductsMessage');
+        const quickFilters = document.querySelectorAll('.quick-filter');
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        const autocompleteList = document.getElementById('autocompleteList');
+        const allergenCheckboxes = document.getElementById('allergenCheckboxes');
+        const successModal = document.getElementById('successModal');
+        const productDetailsModal = document.getElementById('productDetailsModal');
+        const productPhotoInput = document.getElementById('productPhoto');
+        const photoPreview = document.getElementById('photoPreview');
+        const recommendationsSection = document.getElementById('recommendationsSection');
+        const recommendationsGrid = document.getElementById('recommendationsGrid');
+
+        // Статистика
+        const totalProductsEl = document.getElementById('totalProducts');
+        const shownProductsEl = document.getElementById('shownProducts');
+        const excludedAllergensEl = document.getElementById('excludedAllergens');
+        const searchResultsEl = document.getElementById('searchResults');
+        const searchTermEl = document.getElementById('searchTerm');
+
+        // =================== ІНІЦІАЛІЗАЦІЯ ===================
+        function init() {
+            loadProductsFromStorage();
+            renderProducts();
+            updateStats();
+            setupEventListeners();
+            generateAllergenCheckboxes();
+            setupPhotoPreview();
+        }
+
+        function loadProductsFromStorage() {
+            const savedProducts = sessionStorage.getItem('allergycare_products');
+            if (savedProducts) {
+                products = JSON.parse(savedProducts);
+            } else {
+                // СТАНДАРТНІ 50 ПРЕПАРАТІВ
+                products = [
+                    // Антибіотики (10)
+                    {
+                        id: 1,
+                        name: "Амоксицилін",
+                        category: "antibiotics",
+                        description: "Антибіотик широкого спектра дії, призначений для лікування бактеріальних інфекцій",
+                        composition: "амоксицилін, магнію стеарат, крохмаль кукурудзяний, лактоза",
+                        allergens: ["амоксицилін", "лактоза", "пеницилін"],
+                        image: "https://apteka911.ua/content/shop/products/1132/photos/8791-1132-big-1500x1500-959b.jpg"
+                    },
+                    {
+                        id: 2,
+                        name: "Азитроміцин",
+                        category: "antibiotics",
+                        description: "Антибактеріальний препарат макролідної групи, застосовується при інфекціях дихальних шляхів",
+                        composition: "азитроміцин, целюлоза, натрію лаурилсульфат, лактоза",
+                        allergens: ["азитроміцин", "лактоза", "сульфаніламіди"],
+                        image: "https://static.anc.ua/_/rs:fill:1200:1200:0/plain/https://storage.googleapis.com/static-storage/products/images/v2/1067140_lXvtXyRn_20230424_142805.webp"
+                    },
+                    {
+                        id: 3,
+                        name: "Цефтріаксон",
+                        category: "antibiotics",
+                        description: "Цефалоспориновий антибіотик III покоління для парентерального застосування",
+                        composition: "цефтріаксон, лідокаїн (в деяких формах), вода для ін'єкцій",
+                        allergens: ["цефалоспорини", "лідокаїн", "бета-лактамі"],
+                        image: "https://static.anc.ua/_/rs:fill:1200:1200:0/plain/https://storage.googleapis.com/static-storage/products/images/v2z/24033_3.webp"
+                    },
+                    {
+                        id: 4,
+                        name: "Ципрофлоксацин",
+                        category: "antibiotics",
+                        description: "Фторхінолоновий антибіотик для лікування інфекцій сечовивідних шляхів",
+                        composition: "ципрофлоксацин, крохмаль, магнію стеарат, тальк",
+                        allergens: ["хінолони", "тальк", "сульфіти"],
+                        image: "https://root.cdntbl.com/img/goods/cdd2083d-c674-4b1e-908b-03211e286ad7/1/img_0.jpg?v=AAAAAAmYYo"
+                    },
+                    {
+                        id: 5,
+                        name: "Доксициклін",
+                        category: "antibiotics",
+                        description: "Тетрацикліновий антибіотик для лікування акне, хламідіозу, рікетсіозу",
+                        composition: "доксициклін, желатин, титану діоксид, барвник жовтий",
+                        allergens: ["тетрацикліни", "желатин", "барвники"],
+                        image: "https://i.podorozhnyk.com/products/2eb0e7c1-6989-4b6c-bca8-803f02f97f00.webp"
+                    },
+                    {
+                        id: 6,
+                        name: "Кларитроміцин",
+                        category: "antibiotics",
+                        description: "Макролідний антибіотик для лікування інфекцій дихальних шляхів",
+                        composition: "кларитроміцин, крохмаль, кремнію діоксид, лактоза",
+                        allergens: ["макроліди", "лактоза", "сульфіти"],
+                        image: "https://i.podorozhnyk.com/products/92c913c0-af7a-41fc-8872-6e7bf3b521a9.webp"
+                    },
+                    {
+                        id: 7,
+                        name: "Метронідазол",
+                        category: "antibiotics",
+                        description: "Протипротозойний та антибактеріальний препарат для лікування анаеробних інфекцій",
+                        composition: "метронідазол, крохмаль, магнію стеарат, полівінілпіролідон",
+                        allergens: ["нітроімідазоли", "півп", "консерванти"],
+                        image: "https://root.cdntbl.com/img/goods/288a2cc2-81c6-434f-a2a6-abedb70e070f/1/img_0.jpg?v=AAAAAAnj564"
+                    },
+                    {
+                        id: 8,
+                        name: "Флуконазол",
+                        category: "antibiotics",
+                        description: "Противогрибковий препарат для лікування кандидозу та інших грибкових інфекцій",
+                        composition: "флуконазол, лактоза, крохмаль, магнію стеарат",
+                        allergens: ["азоли", "лактоза", "сульфіти"],
+                        image: "https://apteka911.ua/content/shop/products/40666/photos/21615-40666-big-1500x1500-fb85.jpg"
+                    },
+                    {
+                        id: 9,
+                        name: "Амоксиклав",
+                        category: "antibiotics",
+                        description: "Комбінований антибіотик (амоксицилін + клавуланова кислота)",
+                        composition: "амоксицилін, клавуланова кислота, кремнію діоксид, тальк",
+                        allergens: ["пеницилін", "бета-лактамі", "тальк"],
+                        image: "https://root.cdntbl.com/img/goods/890f2e45-e3d7-4107-a887-efe4247efc9d/1/img_0.jpg?v=AAAAAAnj5bI"
+                    },
+                    {
+                        id: 10,
+                        name: "Цефуроксим",
+                        category: "antibiotics",
+                        description: "Цефалоспориновий антибіотик II покоління",
+                        composition: "цефуроксим, натрію цитрат, кислота лимонна, сорбітол",
+                        allergens: ["цефалоспорини", "сорбітол", "цитрати"],
+                        image: "https://apteka911.ua/content/shop/products/15215/tsefuroksim-sandoz-tabl-p-o-500mg-14-sandoz-gmbh-tehops-big-800x800-431e.jpg"
+                    },
+
+                    // Знеболюючі та протизапальні (10)
+                    {
+                        id: 11,
+                        name: "Ібупрофен",
+                        category: "analgesics",
+                        description: "Нестероїдний протизапальний препарат для зняття болю та запалення",
+                        composition: "ібупрофен, крохмаль, кремнію діоксид, стеаринова кислота",
+                        allergens: ["пропіонова кислота", "крохмаль", "консерванти"],
+                        image: "https://www.add.ua/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/1/5/15416-29526-big-1500x1500-3477.jpg"
+                    },
+                    {
+                        id: 12,
+                        name: "Парацетамол",
+                        category: "analgesics",
+                        description: "Анальгетик-антипіретик для зниження температури та зняття болю",
+                        composition: "парацетамол, крохмаль, повідон, стеаринова кислота",
+                        allergens: ["парацетамол", "півп", "консерванти"],
+                        image: "https://apteka1.net/uploads/catalog/2/20577_0_image_18_png85.png"
+                    },
+                    {
+                        id: 13,
+                        name: "Напроксен",
+                        category: "analgesics",
+                        description: "НПЗП для лікування артриту, міалгії та інших больових синдромів",
+                        composition: "напроксен, целюлоза, магнію стеарат, лаурилсульфат натрію",
+                        allergens: ["пропіонова кислота", "лаурилсульфат", "консерванти"],
+                        image: "https://zt.com.ua/wp-content/uploads/2021/06/Naproxen-Zdorovye_550mg_10-768x768-768x645.png"
+                    },
+                    {
+                        id: 14,
+                        name: "Диклофенак",
+                        category: "analgesics",
+                        description: "Потужний протизапальний та знеболюючий препарат",
+                        composition: "диклофенак натрію, лактоза, крохмаль, тальк",
+                        allergens: ["диклофенак", "лактоза", "тальк"],
+                        image: "https://admin.darnytsia.ua/sites/default/files/2024-12/diclofenac-darnitsa_tabs_25mg_no30_1200x1200_0.jpg?itok=qQGPKGVj"
+                    },
+                    {
+                        id: 15,
+                        name: "Кеторолак",
+                        category: "analgesics",
+                        description: "Потужний НПЗП для лікування сильного болю",
+                        composition: "кеторолак трометамол, манітол, натрію хлорид, бензалконію хлорид",
+                        allergens: ["кеторолак", "бензалконій", "консерванти"],
+                        image: "https://lekpharm.by/uploads/catalog/ketorolak/ketorolak-t-10-20.jpg"
+                    },
+                    {
+                        id: 16,
+                        name: "Аспірин",
+                        category: "analgesics",
+                        description: "Ацетилсаліцилова кислота - антиагрегант, антипіретик, анальгетик",
+                        composition: "ацетилсаліцилова кислота, крохмаль, целюлоза, стеаринова кислота",
+                        allergens: ["саліцилати", "крохмаль", "консерванти"],
+                        image: "https://www.add.ua/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/_/-/_-_-500_-_20_full.jpg"
+                    },
+                    {
+                        id: 17,
+                        name: "Мелоксикам",
+                        category: "analgesics",
+                        description: "Селективний інгібітор ЦОГ-2 для лікування остеоартриту",
+                        composition: "мелоксикам, лактоза, натрію цитрат, крохмаль",
+                        allergens: ["оксиками", "лактоза", "цитрати"],
+                        image: "https://admin.darnytsia.ua/sites/default/files/2025-04/meloxicam-darnytsia_tabs_75mg_no20_box.jpeg?itok=-AFqQ2da"
+                    },
+                    {
+                        id: 18,
+                        name: "Целекоксіб",
+                        category: "analgesics",
+                        description: "Селективний інгібітор ЦОГ-2 для лікування артриту",
+                        composition: "целекоксіб, крохмаль, натрію лаурилсульфат, стеаринова кислота",
+                        allergens: ["сульфаніламіди", "лаурилсульфат", "консерванти"],
+                        image: "https://medprofi.org/thumb/2/sdrSEf6E-STx4D8ntQhFuQ/1200r/d/celeco.png"
+                    },
+                    {
+                        id: 19,
+                        name: "Трамадол",
+                        category: "analgesics",
+                        description: "Опіоїдний анальгетик для лікування помірного та сильного болю",
+                        composition: "трамадол гідрохлорид, лактоза, крохмаль, магнію стеарат",
+                        allergens: ["трамадол", "лактоза", "опиоїди"],
+                        image: "https://root.cdntbl.com/img/goods/2a1cdf56-fb81-42b0-a107-43f5ac2a4521/1/img_0.jpg?v=AAAAAA1lBQ8"
+                    },
+                    {
+                        id: 20,
+                        name: "Налгезин",
+                        category: "analgesics",
+                        description: "Напроксен у комбінації з іншими компонентами",
+                        composition: "напроксен, целюлоза, кремнію діоксид, стеаринова кислота",
+                        allergens: ["пропіонова кислота", "кремній", "консерванти"],
+                        image: "https://root.cdntbl.com/img/goods/eaf1a0ff-e436-421b-b041-876044cc9bc2/1/img_0.jpg?v=AAAAAAyR8nQ"
+                    },
+
+                    // Мазі та креми (10)
+                    {
+                        id: 21,
+                        name: "Бепантен",
+                        category: "ointments",
+                        description: "Мазь для лікування подразнень, опіків та сухості шкіри",
+                        composition: "декспантенол, ланолін, парафін, воск бджолиний",
+                        allergens: ["ланолін", "парафін", "воск"],
+                        image: "https://www.bepanthen.ua/sites/g/files/vrxlpx37461/files/2022-06/kream.png"
+                    },
+                    {
+                        id: 22,
+                        name: "Левомеколь",
+                        category: "ointments",
+                        description: "Мазь з антибіотиком для лікування гнійних ран",
+                        composition: "хлорамфенікол, метилурацил, поліетиленоксид, парафін",
+                        allergens: ["хлорамфенікол", "парафін", "консерванти"],
+                        image: "https://root.cdntbl.com/img/goods/3085409c-6b6d-431e-837f-121ca2f4ccc7/1/img_0.jpg?v=AAAAAAnlSco"
+                    },
+                    {
+                        id: 23,
+                        name: "Фастум гель",
+                        category: "ointments",
+                        description: "Гель для зняття болю в суглобах та м'язах",
+                        composition: "кетопрофен, карбомер, триетаноламін, етанол",
+                        allergens: ["кетопрофен", "етанол", "консерванти"],
+                        image: "https://root.cdntbl.com/img/goods/758b43ff-e974-4da9-b2cc-c4c48d99fb8c/1/img_0.jpg?v=AAAAAAn4jfw"
+                    },
+                    {
+                        id: 24,
+                        name: "Гідрокортизонова мазь",
+                        category: "ointments",
+                        description: "Кортикостероїдна мазь для лікування запальних захворювань шкіри",
+                        composition: "гідрокортизон, вазелін, ланолін, парафін",
+                        allergens: ["кортикостероїди", "ланолін", "парафін"],
+                        image: "https://root.cdntbl.com/img/goods/3a35ba2c-fe41-4b83-87a6-26ee088a0223/1/img_0.jpg?v=AAAAAA1kvUU"
+                    },
+                    {
+                        id: 25,
+                        name: "Спасатель",
+                        category: "ointments",
+                        description: "Універсальна мазь для лікування опіків, порізів, подразнень",
+                        composition: "масло обліпихи, вітамін Е, пчелиний віск, масло чайного дерева",
+                        allergens: ["віск", "рослинні олії", "ефірні олії"],
+                        image: "https://bestmarket.tv/media/16/02/2f/1669378090/dr-retter-balsam-retter.png"
+                    },
+                    {
+                        id: 26,
+                        name: "Троксевазин",
+                        category: "ointments",
+                        description: "Гель для лікування венозної недостатності та варикозу",
+                        composition: "троксерутин, карбомер, тріетаноламін, пропіленгліколь",
+                        allergens: ["троксерутин", "пропіленгліколь", "консерванти"],
+                        image: "https://www.add.ua/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/_/2/_20_-2-min_jpg.webp"
+                    },
+                    {
+                        id: 27,
+                        name: "Вольтарен емульгель",
+                        category: "ointments",
+                        description: "Гель на основі диклофенаку для зняття болю в суглобах",
+                        composition: "диклофенак, ізопропанол, пропиленгліколь, карбомер",
+                        allergens: ["диклофенак", "ізопропанол", "пропіленгліколь"],
+                        image: "https://apteka911.ua/content/shop/products/105/voltaren-emulgel-1-tuba-50g-haleon-kh-s-a-r-l-big-800x800-c03f.jpg"
+                    },
+                    {
+                        id: 28,
+                        name: "Судокрем",
+                        category: "ointments",
+                        description: "Захисний крем для лікування пелюшкового дерматиту",
+                        composition: "цинк оксид, бензил бензоат, бензил циннамат, ланолін",
+                        allergens: ["ланолін", "бензоати", "консерванти"],
+                        image: "https://root.cdntbl.com/img/goods/93bfda6d-418a-44c7-a355-c725b5e28b06/1/img_0.jpg?v=AAAAABAujc"
+                    },
+                    {
+                        id: 29,
+                        name: "Акридерм",
+                        category: "ointments",
+                        description: "Кортикостероїдна мазь для лікування дерматитів",
+                        composition: "бетаметазон, вазелін, ланолін, парафін",
+                        allergens: ["кортикостероїди", "ланолін", "парафін"],
+                        image: "https://pics.erkapharm.com/images/goods/549/main.png"
+                    },
+                    {
+                        id: 30,
+                        name: "Мірамистин мазь",
+                        category: "ointments",
+                        description: "Антисептична мазь для лікування інфікованих ран",
+                        composition: "мірамістин, мазева основа, консерванти",
+                        allergens: ["консерванти", "парабени", "ароматизатори"],
+                        image: "https://polimed.ua/image/cache/catalog/images/product/%D0%91%D0%90-000031341-800x800.jpg"
+                    },
+
+                    // Антигістамінні (5)
+                    {
+                        id: 31,
+                        name: "Лоратадин",
+                        category: "antihistamines",
+                        description: "Антигістамінний препарат II покоління для лікування алергії",
+                        composition: "лоратадин, лактоза, крохмаль, магнію стеарат",
+                        allergens: ["лоратадин", "лактоза", "крохмаль"],
+                        image: "https://admin.darnytsia.ua/sites/default/files/2025-03/loratadine-darnitsa_tabs_10mg_no10_1200kh1200.jpg?itok=O6C52gki"
+                    },
+                    {
+                        id: 32,
+                        name: "Цетиризин",
+                        category: "antihistamines",
+                        description: "Антигістамінний препарат для лікування сезонної алергії",
+                        composition: "цетиризин, лактоза, целюлоза, натрію кроскармелоза",
+                        allergens: ["цетиризин", "лактоза", "целюлоза"],
+                        image: "https://root.cdntbl.com/img/goods/e01ec579-5ceb-48ad-873f-0f1c711657a6/1/img_0.jpg?v=AAAAAApq5I0"
+                    },
+                    {
+                        id: 33,
+                        name: "Фексофенадин",
+                        category: "antihistamines",
+                        description: "Антигістамінний препарат III покоління",
+                        composition: "фексофенадин, крохмаль, кремнію діоксид, стеаринова кислота",
+                        allergens: ["фексофенадин", "крохмаль", "консерванти"],
+                        image: "https://root.cdntbl.com/img/goods/06679348-e0d1-4ca8-92f2-b4c46cf3b9ea/1/img_0.jpg?v=AAAAABBsggo"
+                    },
+                    {
+                        id: 34,
+                        name: "Дезлоратадин",
+                        category: "antihistamines",
+                        description: "Активний метаболіт лоратадину з покращеним профілем",
+                        composition: "дезлоратадин, лактоза, крохмаль, тальк",
+                        allergens: ["дезлоратадин", "лактоза", "тальк"],
+                        image: "https://root.cdntbl.com/img/goods/664d5ce0-eb55-4efc-a2db-8b88485ff60f/1/img_0.jpg?v=AAAAAA6M0R0"
+                    },
+                    {
+                        id: 35,
+                        name: "Еріус",
+                        category: "antihistamines",
+                        description: "Дезлоратадин у сиропі для дітей та дорослих",
+                        composition: "дезлоратадин, сорбітол, пропіленгліколь, ароматизатор",
+                        allergens: ["дезлоратадин", "сорбітол", "ароматизатор"],
+                        image: "https://root.cdntbl.com/img/goods/c9dfc24d-a365-4f0a-818a-79a43de8f18e/1/img_0.jpg?v=AAAAAA08IfI"
+                    },
+
+                    // Спреї (5)
+                    {
+                        id: 36,
+                        name: "Аквалор",
+                        category: "sprays",
+                        description: "Спрей для носа на основі морської води",
+                        composition: "морська вода, натрію хлорид, вода очищена",
+                        allergens: ["консерванти"],
+                        image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=320&h=220&fit=crop&crop=center"
+                    },
+                    {
+                        id: 37,
+                        name: "Називін",
+                        category: "sprays",
+                        description: "Спрей для носа з оксиметазоліном для полегшення носового дихання",
+                        composition: "оксиметазолін, бензалконію хлорид, натрію дигідрофосфат",
+                        allergens: ["бензалконій", "консерванти"],
+                        image: "https://apteka911.ua/content/shop/products/9142/nazivin-sensitiv-sprey-nazal-0-05-fl-10ml-pi-end-dzhi-hels-ostriya-gmbh-big-800x800-2fcd.jpg"
+                    },
+                    {
+                        id: 38,
+                        name: "Спрей від алергії",
+                        category: "sprays",
+                        description: "Спрей для носа з флутиказоном для лікування алергічного риніту",
+                        composition: "флутиказон, целюлоза, полісорбат, бензалконію хлорид",
+                        allergens: ["флутиказон", "бензалконій", "полісорбат"],
+                        image: "https://static.anc.ua/_/rs:fill:1200:1200:0/plain/https://storage.googleapis.com/static-storage/products/images/v2z/1066519.webp"
+                    },
+                    {
+                        id: 39,
+                        name: "Тантум Верде",
+                        category: "sprays",
+                        description: "Спрей для горла з протизапальною дією",
+                        composition: "бензидамін, ментол, сахарин, етанол",
+                        allergens: ["бензидамін", "ментол", "етанол"],
+                        image: "https://www.add.ua/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/t/v/tv_solution_transparent_3_.jpg"
+                    },
+                    {
+                        id: 40,
+                        name: "Гексорал",
+                        category: "sprays",
+                        description: "Антисептичний спрей для горла",
+                        composition: "гексетидин, етанол, ментол, сахарин",
+                        allergens: ["гексетидин", "етанол", "ментол"],
+                        image: "https://root.cdntbl.com/img/goods/34f4c5b8-43e3-41b2-b21f-ee92f738832a/1/img_0.jpg?v=AAAAAAmLeyc"
+                    },
+
+                    // Сиропи (5)
+                    {
+                        id: 41,
+                        name: "Нурофен для дітей",
+                        category: "syrups",
+                        description: "Сироп ібупрофену для дітей",
+                        composition: "ібупрофен, сорбітол, гліцерин, ароматизатор полуничний",
+                        allergens: ["ібупрофен", "сорбітол", "ароматизатор"],
+                        image: "https://root.cdntbl.com/img/goods/2b795483-1219-451a-bb45-75e711eddc55/1/img_0.jpg?v=AAAAAAmYOw"
+                    },
+                    {
+                        id: 42,
+                        name: "Парацетамол сироп",
+                        category: "syrups",
+                        description: "Сироп парацетамолу для дітей",
+                        composition: "парацетамол, сахароза, сорбітол, ароматизатор",
+                        allergens: ["парацетамол", "сахароза", "ароматизатор"],
+                        image: "https://1sa.com.ua/media/catalog/product/cache/0cb86aa621afec2b43f6f8736c54c157/t/m/tmp_2570_3.jpg"
+                    },
+                    {
+                        id: 43,
+                        name: "Амбробене",
+                        category: "syrups",
+                        description: "Сироп від кашлю з амброксолом",
+                        composition: "амброксол, сорбітол, пропіленгліколь, ароматизатор",
+                        allergens: ["амброксол", "сорбітол", "ароматизатор"],
+                        image: "https://apteka911.ua/content/shop/products/16/photos/53-16-big-800x800-a464.jpg"
+                    },
+                    {
+                        id: 44,
+                        name: "Лазолван",
+                        category: "syrups",
+                        description: "Сироп з амброксолом для лікування кашлю",
+                        composition: "амброксол, сорбітол, гліцерин, ароматизатор",
+                        allergens: ["амброксол", "сорбітол", "ароматизатор"],
+                        image: "https://i.podorozhnyk.com/products/b641fb01-5482-4603-aeb6-4e6aa5f9bbea-large.webp"
+                    },
+                    {
+                        id: 45,
+                        name: "Ереспал сироп",
+                        category: "syrups",
+                        description: "Сироп з фенспіридом для лікування кашлю",
+                        composition: "фенспірид, сахароза, гліцерин, ароматизатор",
+                        allergens: ["фенспірид", "сахароза", "ароматизатор"],
+                        image: "https://apteka911.ua/content/shop/products/1441/erespal-sirop-200mg-100ml-fl-150ml-laboratorii-serve-indastri-big-800x800-5a38.jpg"
+                    },
+
+                    // Краплі (5)
+                    {
+                        id: 46,
+                        name: "Офтальмоферон",
+                        category: "drops",
+                        description: "Краплі очні з інтерфероном",
+                        composition: "інтерферон альфа, борна кислота, динатрію едедат",
+                        allergens: ["консерванти", "динатрію едедат"],
+                        image: "https://root.cdntbl.com/img/goods/102b125f-e366-43e3-996d-1a1223291498/1/img_0.jpg?v=AAAAAAhZRi0"
+                    },
+                    {
+                        id: 47,
+                        name: "Візин",
+                        category: "drops",
+                        description: "Краплі для очей для зняття почервоніння",
+                        composition: "тетризолін, бензалконію хлорид, натрію хлорид",
+                        allergens: ["тетризолін", "бензалконій"],
+                        image: "https://static.anc.ua/_/rs:fill:1200:1200:0/plain/https://storage.googleapis.com/static-storage/products/images/v2/56386_9IMNoGDo_20241220_102943.webp"
+                    },
+                    {
+                        id: 48,
+                        name: "Отипакс",
+                        category: "drops",
+                        description: "Краплі для вушок з знеболюючою дією",
+                        composition: "лідокаїн, феназон, гліцерин, натрію тіосульфат",
+                        allergens: ["лідокаїн", "феназон", "гліцерин"],
+                        image: "https://root.cdntbl.com/img/goods/196d5592-2d27-4100-9dba-ffdb1b079dc0/1/img_0.jpg?v=AAAAAAnpYdc"
+                    },
+                    {
+                        id: 49,
+                        name: "Нафтизин",
+                        category: "drops",
+                        description: "Краплі в нос з нафазоліном",
+                        composition: "нафазолін, борна кислота, вода очищена",
+                        allergens: ["нафазолін", "консерванти"],
+                        image: "https://farmak.ua/wp-content/uploads/2025/08/1_naftizin_left_3d.png"
+                    },
+                    {
+                        id: 50,
+                        name: "Галазолін",
+                        category: "drops",
+                        description: "Краплі в нос з ксилометазоліном",
+                        composition: "ксилометазолін, бензалконію хлорид, натрію хлорид",
+                        allergens: ["ксилометазолін", "бензалконій"],
+                        image: "https://root.cdntbl.com/img/goods/727dfb2b-1fc9-4a76-a7bb-f6c47b28b120/1/img_0.jpg?v=AAAAAAnsu14"
+                    }
+                ];
+                saveProductsToStorage();
+            }
+        }
+
+        function saveProductsToStorage() {
+            sessionStorage.setItem('allergycare_products', JSON.stringify(products));
+        }
+
+        // =================== ОБРОБНИКИ ПОДІЙ ===================
+        function setupEventListeners() {
+            // Додавання алергену по Enter
+            allergenInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addAllergenFromInput();
+                    hideAllergenSuggestions();
+                }
+            });
+
+            // Автодоповнення для алергенів
+            allergenInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                if (query.length > 0) {
+                    showAllergenSuggestions(query);
+                } else {
+                    hideAllergenSuggestions();
+                }
+            });
+
+            // Обробка вибору алергена з автодоповнення
+            allergenSuggestions.addEventListener('click', function(e) {
+                if (e.target.classList.contains('allergen-suggestion')) {
+                    const allergen = e.target.getAttribute('data-allergen');
+                    addAllergen(allergen);
+                    allergenInput.value = '';
+                    hideAllergenSuggestions();
+                    allergenInput.focus();
+                }
+            });
+
+            // Фільтрація за алергенами
+            filterBtn.addEventListener('click', function() {
+                addAllergenFromInput();
+                filterProducts();
+                hideAllergenSuggestions();
+            });
+
+            // Скидання фільтрів
+            resetBtn.addEventListener('click', resetAllFilters);
+            resetFiltersBtn.addEventListener('click', resetAllFilters);
+
+            // Пошук товарів
+            searchBtn.addEventListener('click', function() {
+                currentSearch = searchInput.value.toLowerCase().trim();
+                filterProducts();
+            });
+
+            // Пошук по Enter
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    currentSearch = searchInput.value.toLowerCase().trim();
+                    filterProducts();
+                }
+            });
+
+            // Очищення пошуку
+            clearSearchBtn.addEventListener('click', function() {
+                searchInput.value = "";
+                currentSearch = "";
+                filterProducts();
+                autocompleteList.innerHTML = '';
+                recommendationsSection.classList.add('hidden');
+                isRecommendationMode = false;
+            });
+
+            // Швидкі фільтри
+            quickFilters.forEach(button => {
+                button.addEventListener('click', function() {
+                    const allergen = this.getAttribute('data-allergen');
+                    toggleAllergen(allergen, this);
+                });
+            });
+
+            // Категорії фільтрів
+            categoryFilters.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryFilters.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.getAttribute('data-category');
+                    filterProducts();
+                });
+            });
+
+            // Показ форми додавання
+            addProductBtn.addEventListener('click', function() {
+                addProductForm.classList.toggle('active');
+                if (addProductForm.classList.contains('active')) {
+                    addProductForm.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            // Скасування додавання
+            cancelAddBtn.addEventListener('click', function() {
+                addProductForm.classList.remove('active');
+                newProductForm.reset();
+                resetPhotoPreview();
+            });
+
+            // Відправка форми нового товару
+            newProductForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                addNewProduct();
+            });
+
+            // Автодоповнення для пошуку
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                if (query.length === 0) {
+                    autocompleteList.innerHTML = '';
+                    return;
+                }
+
+                const matches = [];
+                const seen = new Set();
+
+                // Пошук за назвами
+                products.forEach(product => {
+                    if (product.name.toLowerCase().includes(query) && !seen.has(product.name)) {
+                        matches.push({type: "Назва", value: product.name});
+                        seen.add(product.name);
+                    }
+
+                    if (categories[product.category] && categories[product.category].toLowerCase().includes(query) && !seen.has(categories[product.category])) {
+                        matches.push({type: "Категорія", value: categories[product.category]});
+                        seen.add(categories[product.category]);
+                    }
+
+                    // Пошук за інгредієнтами
+                    product.composition.split(',').forEach(ing => {
+                        const trimmedIng = ing.trim().toLowerCase();
+                        if (trimmedIng.includes(query) && !seen.has(trimmedIng)) {
+                            matches.push({type: "Інгредієнт", value: trimmedIng});
+                            seen.add(trimmedIng);
+                        }
+                    });
+
+                    // Пошук за алергенами
+                    product.allergens.forEach(allergen => {
+                        if (allergen.toLowerCase().includes(query) && !seen.has(allergen)) {
+                            matches.push({type: "Алерген", value: allergen});
+                            seen.add(allergen);
+                        }
+                    });
+                });
+
+                // Пошук за алергенами зі списку
+                allAllergens.forEach(allergen => {
+                    if (allergen.toLowerCase().includes(query) && !seen.has(allergen)) {
+                        matches.push({type: "Алерген", value: allergen});
+                        seen.add(allergen);
+                    }
+                });
+
+                // Показуємо максимум 8 результатів
+                const limitedMatches = matches.slice(0, 8);
+                showAutocomplete(limitedMatches, query);
+            });
+
+            // Обробка вибору з автодоповнення
+            autocompleteList.addEventListener('click', function(e) {
+                const target = e.target.closest('.autocomplete-item');
+                if (target) {
+                    const selectedValue = target.getAttribute('data-value');
+                    searchInput.value = selectedValue;
+                    autocompleteList.innerHTML = '';
+
+                    // Автоматичний пошук при виборі з автодоповнення
+                    currentSearch = selectedValue.toLowerCase().trim();
+                    filterProducts();
+
+                    // Знаходимо продукт, якщо це назва продукта
+                    const foundProduct = products.find(p => p.name.toLowerCase() === selectedValue.toLowerCase());
+                    if (foundProduct) {
+                        lastSearchedProduct = foundProduct;
+                        // Показуємо рекомендації, якщо продукт містить алергени
+                        if (foundProduct.allergens.length > 0) {
+                            showRecommendations(foundProduct);
+                        }
+                    }
+
+                    searchInput.focus();
+                }
+            });
+
+            // Закриття модальних вікон при кліку поза ними
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    closeModal(event.target.id);
+                }
+            });
+
+            // Закриття по ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+
+            // Закриття автодоповнення при кліку поза ним
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.autocomplete') && !e.target.closest('.allergen-autocomplete')) {
+                    autocompleteList.innerHTML = '';
+                    hideAllergenSuggestions();
+                }
+            });
+        }
+
+        // =================== ФУНКЦІЇ ДЛЯ АЛЕРГЕНІВ ===================
+        function showAllergenSuggestions(query) {
+            const matches = allAllergens.filter(allergen =>
+                allergen.toLowerCase().includes(query.toLowerCase())
+            ).slice(0, 6);
+
+            allergenSuggestions.innerHTML = '';
+
+            if (matches.length > 0) {
+                matches.forEach(allergen => {
+                    const div = document.createElement('div');
+                    div.className = 'allergen-suggestion';
+                    div.setAttribute('data-allergen', allergen);
+                    div.textContent = allergen;
+                    allergenSuggestions.appendChild(div);
+                });
+                allergenSuggestions.style.display = 'block';
+            } else {
+                hideAllergenSuggestions();
+            }
+        }
+
+        function hideAllergenSuggestions() {
+            allergenSuggestions.style.display = 'none';
+        }
+
+        function addAllergenFromInput() {
+            const value = allergenInput.value.trim();
+            if (value) {
+                const allergens = value.split(',').map(item => item.trim().toLowerCase()).filter(item => item);
+                allergens.forEach(allergen => {
+                    if (!activeAllergens.includes(allergen)) {
+                        activeAllergens.push(allergen);
+                    }
+                });
+                allergenInput.value = '';
+                updateAllergenTags();
+                updateQuickFilters();
+            }
+        }
+
+        function addAllergen(allergen) {
+            if (!activeAllergens.includes(allergen)) {
+                activeAllergens.push(allergen);
+                updateAllergenTags();
+                updateQuickFilters();
+            }
+        }
+
+        function toggleAllergen(allergen, button) {
+            if (activeAllergens.includes(allergen)) {
+                activeAllergens = activeAllergens.filter(a => a !== allergen);
+                button.classList.remove('active');
+            } else {
+                activeAllergens.push(allergen);
+                button.classList.add('active');
+            }
+            updateAllergenTags();
+            filterProducts();
+        }
+
+        function updateAllergenTags() {
+            allergenTags.innerHTML = '';
+            activeAllergens.forEach(allergen => {
+                const tag = document.createElement('div');
+                tag.className = 'allergen-tag';
+                tag.innerHTML = `
+                    ${allergen}
+                    <i class="fas fa-times" data-allergen="${allergen}"></i>
+                `;
+                allergenTags.appendChild(tag);
+
+                // Додаємо слухач для видалення алергену
+                tag.querySelector('i').addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const allergenToRemove = this.getAttribute('data-allergen');
+                    activeAllergens = activeAllergens.filter(a => a !== allergenToRemove);
+                    updateAllergenTags();
+                    updateQuickFilters();
+                    filterProducts();
+                });
+            });
+        }
+
+        function updateQuickFilters() {
+            quickFilters.forEach(button => {
+                const allergen = button.getAttribute('data-allergen');
+                if (activeAllergens.includes(allergen)) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        // =================== ФІЛЬТРАЦІЯ ТОВАРІВ ===================
+        function filterProducts() {
+            filteredProducts = [...products];
+
+            // Фільтрація за алергенами
+            if (activeAllergens.length > 0) {
+                filteredProducts = filteredProducts.filter(product => {
+                    return !activeAllergens.some(allergen =>
+                        product.allergens.includes(allergen) ||
+                        product.composition.toLowerCase().includes(allergen)
+                    );
+                });
+            }
+
+            // Фільтрація за категорією
+            if (currentCategory !== "all") {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.category === currentCategory
+                );
+            }
+
+            // Фільтрація за пошуком
+            if (currentSearch) {
+                filteredProducts = filteredProducts.filter(product => {
+                    const searchLower = currentSearch.toLowerCase();
+                    return product.name.toLowerCase().includes(searchLower) ||
+                           categories[product.category].toLowerCase().includes(searchLower) ||
+                           product.composition.toLowerCase().includes(searchLower) ||
+                           product.description.toLowerCase().includes(searchLower) ||
+                           product.allergens.some(a => a.toLowerCase().includes(searchLower));
+                });
+            }
+
+            renderProducts();
+            updateStats();
+
+            // Якщо це пошук і знайдено продукт, перевіряємо на алергени
+            if (currentSearch && filteredProducts.length > 0) {
+                const foundProduct = filteredProducts[0];
+                if (foundProduct && foundProduct.allergens.length > 0) {
+                    lastSearchedProduct = foundProduct;
+                    showRecommendations(foundProduct);
+                } else {
+                    recommendationsSection.classList.add('hidden');
+                    isRecommendationMode = false;
+                }
+            } else {
+                recommendationsSection.classList.add('hidden');
+                isRecommendationMode = false;
+            }
+        }
+
+        function resetAllFilters() {
+            activeAllergens = [];
+            currentSearch = "";
+            currentCategory = "all";
+            searchInput.value = "";
+            allergenInput.value = "";
+            hideAllergenSuggestions();
+            recommendationsSection.classList.add('hidden');
+            isRecommendationMode = false;
+
+            // Оновлюємо UI
+            updateAllergenTags();
+            updateQuickFilters();
+            categoryFilters.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-category') === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+
+            filterProducts();
+        }
+
+        // =================== РЕКОМЕНДАЦІЇ ===================
+        function showRecommendations(originalProduct) {
+            if (!originalProduct) return;
+
+            recommendationsSection.classList.remove('hidden');
+            isRecommendationMode = true;
+
+            // Знаходимо схожі препарати тієї ж категорії без алергенів користувача
+            const similarProducts = products.filter(product => {
+                // Тієї ж категорії
+                if (product.category !== originalProduct.category) return false;
+
+                // Не той самий продукт
+                if (product.id === originalProduct.id) return false;
+
+                // Без алергенів користувача
+                if (activeAllergens.some(allergen =>
+                    product.allergens.includes(allergen) ||
+                    product.composition.toLowerCase().includes(allergen)
+                )) return false;
+
+                // Без алергенів оригінального продукта
+                if (originalProduct.allergens.some(allergen =>
+                    product.allergens.includes(allergen)
+                )) return false;
+
+                return true;
+            });
+
+            // Обмежуємо до 4 рекомендацій
+            const recommendations = similarProducts.slice(0, 4);
+
+            renderRecommendations(recommendations);
+        }
+
+        function renderRecommendations(productsList) {
+            recommendationsGrid.innerHTML = '';
+
+            if (productsList.length === 0) {
+                recommendationsGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-medium);">
+                        <i class="fas fa-info-circle" style="font-size: 3rem; margin-bottom: 15px; color: var(--mint-dark);"></i>
+                        <h3 style="color: var(--dark-teal); margin-bottom: 10px;">Немає рекомендацій</h3>
+                        <p>Не знайдено схожих препаратів без ваших алергенів</p>
+                    </div>
+                `;
+                return;
+            }
+
+            productsList.forEach(product => {
+                const recCard = document.createElement('div');
+                recCard.className = 'recommendation-card';
+                recCard.innerHTML = `
+                    <div class="recommendation-name">${product.name}</div>
+                    <div class="recommendation-category">
+                        <i class="fas ${getCategoryIcon(product.category)}"></i>
+                        ${categories[product.category]}
+                    </div>
+                    <div class="recommendation-composition">
+                        <strong>Склад:</strong> ${product.composition.length > 100 ? product.composition.substring(0, 100) + '...' : product.composition}
+                    </div>
+                    ${product.allergens.length > 0 ? `
+                        <div class="recommendation-allergens">
+                            ${product.allergens.map(allergen =>
+                                `<span class="allergen-badge">${allergen}</span>`
+                            ).join(' ')}
+                        </div>
+                    ` : ''}
+                    <button class="btn btn-primary" style="margin-top: 15px; width: 100%;" onclick="addToCart(${product.id})">
+                        <i class="fas fa-plus"></i> Додати до списку
+                    </button>
+                `;
+
+                recommendationsGrid.appendChild(recCard);
+            });
+        }
+
+        window.addToCart = function(productId) {
+            // Тут можна додати логіку для додавання до списку покупок
+            alert("Препарат додано до вашого списку!");
+        };
+
+        // =================== ПЕРЕДПЕРЕГЛЯД ФОТО ===================
+        function setupPhotoPreview() {
+            productPhotoInput.addEventListener('input', function() {
+                const url = this.value.trim();
+                updatePhotoPreview(url);
+            });
+        }
+
+        function updatePhotoPreview(url) {
+            if (url && isValidUrl(url)) {
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = "Попередній перегляд фото";
+                img.onload = function() {
+                    photoPreview.innerHTML = '';
+                    photoPreview.appendChild(img);
+                };
+                img.onerror = function() {
+                    showErrorPhotoPreview();
+                };
+            } else if (url) {
+                showErrorPhotoPreview();
+            } else {
+                resetPhotoPreview();
+            }
+        }
+
+        function showErrorPhotoPreview() {
+            photoPreview.innerHTML = `
+                <div class="photo-preview-placeholder" style="width: 200px; height: 150px; background: rgba(162, 217, 206, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-light); margin: 0 auto; flex-direction: column;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: var(--warning);"></i>
+                    <div style="margin-top: 10px; font-size: 0.9rem;">Не вдалося завантажити зображення</div>
+                </div>
+            `;
+        }
+
+        function resetPhotoPreview() {
+            photoPreview.innerHTML = `
+                <div class="photo-preview-placeholder" style="width: 200px; height: 150px; background: rgba(162, 217, 206, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-light); margin: 0 auto; flex-direction: column;">
+                    <i class="fas fa-image" style="font-size: 2rem;"></i>
+                    <div style="margin-top: 10px; font-size: 0.9rem;">Попередній перегляд</div>
+                </div>
+            `;
+        }
+
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // =================== ВІДОБРАЖЕННЯ ТОВАРІВ ===================
+        function renderProducts() {
+            productsGrid.innerHTML = '';
+
+            if (filteredProducts.length === 0) {
+                noProductsMessage.classList.remove('hidden');
+                return;
+            }
+
+            noProductsMessage.classList.add('hidden');
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+
+                const imageUrl = product.image && isValidUrl(product.image) ?
+                    product.image :
+                    `https://via.placeholder.com/320x220/E8F6F3/1ABC9C?text=${encodeURIComponent(product.name)}`;
+
+                const hasActiveAllergens = activeAllergens.some(allergen =>
+                    product.allergens.includes(allergen)
+                );
+
+                productCard.innerHTML = `
+                    <img src="${imageUrl}" alt="${product.name}" class="product-img" onerror="this.src='https://via.placeholder.com/320x220/E8F6F3/1ABC9C?text=${encodeURIComponent(product.name)}'">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-category">
+                            <i class="fas ${getCategoryIcon(product.category)}"></i>
+                            ${categories[product.category] || product.category}
+                        </div>
+                        <p class="product-description">${product.description}</p>
+
+                        <div class="product-composition">
+                            <div class="composition-title">Склад:</div>
+                            <div class="composition-text">${product.composition}</div>
+                        </div>
+
+                        ${product.allergens.length > 0 ?
+                            `<div class="product-allergens">
+                                <div class="composition-title">Можливі алергени:</div>
+                                <div>
+                                    ${product.allergens.map(allergen =>
+                                        `<span class="allergen-badge ${activeAllergens.includes(allergen) ? 'danger' : ''}">${allergen}</span>`
+                                    ).join(' ')}
+                                </div>
+                            </div>`
+                            : ''
+                        }
+
+                        <div class="product-actions">
+                            <button class="action-btn details" onclick="showProductDetails(${product.id})">
+                                <i class="fas fa-info-circle"></i> Деталі
+                            </button>
+                            ${hasActiveAllergens ?
+                                `<button class="action-btn exclude" onclick="excludeProduct(${product.id})">
+                                    <i class="fas fa-ban"></i> Виключити
+                                </button>`
+                                : ''
+                            }
+                            <button class="action-btn delete" onclick="deleteProduct(${product.id})">
+                                <i class="fas fa-trash"></i> Видалити
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                "antibiotics": "fa-capsules",
+                "analgesics": "fa-pills",
+                "ointments": "fa-prescription-bottle",
+                "antihistamines": "fa-allergies",
+                "sprays": "fa-spray-can",
+                "syrups": "fa-wine-bottle",
+                "drops": "fa-tint",
+                "vitamins": "fa-apple-alt"
+            };
+            return icons[category] || "fa-medkit";
+        }
+
+        // =================== МОДАЛЬНІ ВІКНА ===================
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+            document.body.style.overflow = 'auto';
+        }
+
+        // =================== ДЕТАЛІ ТОВАРУ ===================
+        window.showProductDetails = function(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const imageUrl = product.image && isValidUrl(product.image) ?
+                product.image :
+                `https://via.placeholder.com/320x220/E8F6F3/1ABC9C?text=${encodeURIComponent(product.name)}`;
+
+            const detailsContent = document.getElementById('productDetailsContent');
+            detailsContent.innerHTML = `
+                <div class="product-details-header">
+                    <img src="${imageUrl}" alt="${product.name}" class="product-details-img" style="width: 120px; height: 120px; object-fit: cover; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);" onerror="this.src='https://via.placeholder.com/320x220/E8F6F3/1ABC9C?text=${encodeURIComponent(product.name)}'">
+                    <div class="product-details-info">
+                        <h2 class="product-details-name" style="font-size: 1.6rem; color: var(--dark-teal); margin-bottom: 8px; font-weight: 800;">${product.name}</h2>
+                        <div class="product-details-category" style="color: var(--green-medium); font-size: 1rem; margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas ${getCategoryIcon(product.category)}"></i>
+                            ${categories[product.category] || product.category}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-details-section">
+                    <h4 style="color: var(--dark-teal); margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;"><i class="fas fa-file-medical"></i> Опис та показання</h4>
+                    <p style="color: var(--text-medium); line-height: 1.6; font-size: 0.95rem;">${product.description}</p>
+                </div>
+
+                <div class="product-details-section">
+                    <h4 style="color: var(--dark-teal); margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;"><i class="fas fa-list-ol"></i> Склад</h4>
+                    <div class="details-list" style="background: rgba(232, 246, 243, 0.8); padding: 15px; border-radius: 12px; border-left: 3px solid var(--green-medium);">
+                        ${product.composition}
+                    </div>
+                </div>
+
+                ${product.allergens.length > 0 ? `
+                <div class="product-details-section">
+                    <h4 style="color: var(--dark-teal); margin-bottom: 10px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;"><i class="fas fa-exclamation-triangle"></i> Можливі алергени</h4>
+                    <div class="details-allergens" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px;">
+                        ${product.allergens.map(allergen =>
+                            `<span class="allergen-badge ${activeAllergens.includes(allergen) ? 'danger' : ''}">${allergen}</span>`
+                        ).join(' ')}
+                    </div>
+                </div>
+                ` : ''}
+
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.1);">
+                    <button class="btn btn-primary" onclick="excludeProduct(${product.id}); closeModal('productDetailsModal');" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 28px; background: var(--gradient); color: var(--white); border: none; border-radius: 12px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s; min-height: 48px;">
+                        <i class="fas fa-ban"></i> Виключити цей препарат
+                    </button>
+                </div>
+            `;
+
+            showModal('productDetailsModal');
+        };
+
+        // =================== ДОДАВАННЯ НОВОГО ПРЕПАРАТУ ===================
+        function generateAllergenCheckboxes() {
+            allergenCheckboxes.innerHTML = '';
+            allAllergens.forEach(allergen => {
+                const checkboxItem = document.createElement('div');
+                checkboxItem.className = 'checkbox-item';
+                checkboxItem.innerHTML = `
+                    <input type="checkbox" id="allergen-${allergen}" value="${allergen}">
+                    <label for="allergen-${allergen}">${allergen}</label>
+                `;
+                allergenCheckboxes.appendChild(checkboxItem);
+            });
+        }
+
+        function addNewProduct() {
+            const name = document.getElementById('productName').value.trim();
+            const category = document.getElementById('productCategory').value;
+            const description = document.getElementById('productDescription').value.trim() || "Опис препарату";
+            const composition = document.getElementById('productComposition').value.trim();
+            const photoUrl = document.getElementById('productPhoto').value.trim();
+
+            // Перевіряємо обов'язкові поля
+            if (!name || !category || !composition || !photoUrl) {
+                alert("Будь ласка, заповніть всі обов'язкові поля (позначені *)");
+                return;
+            }
+
+            // Отримуємо вибрані алергени
+            const selectedAllergens = [];
+            const checkboxes = allergenCheckboxes.querySelectorAll('input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                selectedAllergens.push(checkbox.value);
+            });
+
+            // Створюємо новий продукт
+            const newProduct = {
+                id: Date.now(),
+                name: name,
+                category: category,
+                description: description,
+                composition: composition,
+                allergens: selectedAllergens,
+                image: photoUrl
+            };
+
+            // Додаємо до масиву
+            products.push(newProduct);
+            saveProductsToStorage();
+
+            // Оновлюємо інтерфейс
+            addProductForm.classList.remove('active');
+            newProductForm.reset();
+            resetPhotoPreview();
+            filterProducts();
+
+            // Показуємо модальне вікно успіху
+            showModal('successModal');
+        }
+
+        window.deleteProduct = function(productId) {
+            if (confirm("Ви впевнені, що хочете видалити цей препарат?")) {
+                const index = products.findIndex(p => p.id === productId);
+                if (index !== -1) {
+                    products.splice(index, 1);
+                    saveProductsToStorage();
+                    filterProducts();
+                }
+            }
+        };
+
+        window.excludeProduct = function(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                // Додаємо всі алергени з препарату до активних
+                product.allergens.forEach(allergen => {
+                    if (!activeAllergens.includes(allergen)) {
+                        activeAllergens.push(allergen);
+                    }
+                });
+                updateAllergenTags();
+                updateQuickFilters();
+                filterProducts();
+
+                // Якщо це був пошукований продукт, показуємо рекомендації
+                if (lastSearchedProduct && lastSearchedProduct.id === productId) {
+                    showRecommendations(product);
+                }
+            }
+        };
+
+        // =================== АВТОДОПОВНЕННЯ ===================
+        function showAutocomplete(items, query) {
+            autocompleteList.innerHTML = '';
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'autocomplete-item';
+                div.setAttribute('data-value', item.value);
+
+                const startIndex = item.value.toLowerCase().indexOf(query.toLowerCase());
+                let displayText = item.value;
+
+                if (startIndex !== -1) {
+                    const before = item.value.substring(0, startIndex);
+                    const match = item.value.substring(startIndex, startIndex + query.length);
+                    const after = item.value.substring(startIndex + query.length);
+                    displayText = `${before}<strong>${match}</strong>${after}`;
+                }
+
+                div.innerHTML = `
+                    <div style="font-weight: 600;">${displayText}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-light);">${item.type}</div>
+                `;
+
+                autocompleteList.appendChild(div);
+            });
+        }
+
+        // =================== СТАТИСТИКА ===================
+        function updateStats() {
+            const total = products.length;
+            const shown = filteredProducts.length;
+            const excluded = activeAllergens.length;
+
+            totalProductsEl.textContent = total;
+            shownProductsEl.textContent = shown;
+            excludedAllergensEl.textContent = excluded;
+
+            // Оновлюємо пошукову статистику
+            if (currentSearch) {
+                searchResultsEl.textContent = shown;
+
+                // Форматуємо список знайдених препаратів
+                if (shown === 0) {
+                    searchTermEl.textContent = `Пошук: "${currentSearch}" - не знайдено`;
+                } else if (shown === 1) {
+                    searchTermEl.textContent = `Пошук: "${filteredProducts[0].name}"`;
+                } else if (shown === 2) {
+                    searchTermEl.textContent = `Пошук: "${filteredProducts[0].name}", "${filteredProducts[1].name}"`;
+                } else if (shown > 2) {
+                    searchTermEl.textContent = `Пошук: "${filteredProducts[0].name}", "${filteredProducts[1].name}"...`;
+                }
+            } else {
+                searchResultsEl.textContent = shown;
+                if (currentCategory !== "all") {
+                    searchTermEl.textContent = `Категорія: ${categories[currentCategory]}`;
+                } else {
+                    searchTermEl.textContent = "Всі препарати";
+                }
+            }
+
+            // Якщо є активні алергени, додаємо це до опису
+            if (activeAllergens.length > 0) {
+                const currentText = searchTermEl.textContent;
+                searchTermEl.textContent = `${currentText} (без ${activeAllergens.slice(0, 2).join(', ')}${activeAllergens.length > 2 ? '...' : ''})`;
+            }
+        }
+
+        // =================== ЗАПУСК ПРОГРАМИ ===================
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
