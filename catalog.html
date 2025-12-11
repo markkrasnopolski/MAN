@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AllergyCare - Каталог препаратів</title>
-    <link rel="icon" type="image/x-icon" href="/MAN/favicon.ico" type="image/svg+xml">
+    <link rel="icon" type="image/x-icon" href="/MAN/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -1414,11 +1414,16 @@
         // =================== ІНІЦІАЛІЗАЦІЯ ===================
         function init() {
             loadProductsFromStorage();
-            renderProducts();
-            updateStats();
             setupEventListeners();
             generateAllergenCheckboxes();
             setupPhotoPreview();
+
+            // ВИПРАВЛЕННЯ: заповнюємо filteredProducts всіма товарами на старті
+            filteredProducts = [...products];
+
+            // ВІДОБРАЖЕННЯ товарів та статистики
+            renderProducts();
+            updateStats();
         }
 
         function loadProductsFromStorage() {
@@ -2632,6 +2637,10 @@
             addProductForm.classList.remove('active');
             newProductForm.reset();
             resetPhotoPreview();
+
+            // ВИПРАВЛЕННЯ: оновлюємо filteredProducts після додавання нового товару
+            filteredProducts = [...products];
+
             filterProducts();
 
             // Показуємо модальне вікно успіху
@@ -2644,6 +2653,10 @@
                 if (index !== -1) {
                     products.splice(index, 1);
                     saveProductsToStorage();
+
+                    // ВИПРАВЛЕННЯ: оновлюємо filteredProducts після видалення
+                    filteredProducts = filteredProducts.filter(p => p.id !== productId);
+
                     filterProducts();
                 }
             }
@@ -2742,4 +2755,3 @@
     </script>
 </body>
 </html>
-
